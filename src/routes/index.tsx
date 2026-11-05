@@ -4,7 +4,6 @@ import {
   Ear, ScanSearch, MessageCircle, Disc3, SlidersHorizontal, Gauge, Drum, Mic, Lightbulb,
   ArrowDown, ArrowRight, Menu, X, Instagram, Youtube, Music2, CheckCircle2, Quote,
 } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import logo from "@/assets/logo-jr.png.asset.json";
 import heroImg from "@/assets/estudio-mezclas.jpeg.asset.json";
 import retrato from "@/assets/estudio-retrato.jpeg.asset.json";
@@ -202,14 +201,16 @@ function Index() {
       <section id="faq" className="mx-auto max-w-3xl px-6 py-24">
         <Eyebrow>FAQ</Eyebrow>
         <h2 className="reveal mb-10 text-5xl uppercase md:text-6xl">{t(ui.faqTitle)}</h2>
-        <Accordion type="single" collapsible>
+        <div className="divide-y divide-border border-y border-border">
           {faq.map((f, i) => (
-            <AccordionItem key={i} value={`q${i}`}>
-              <AccordionTrigger className="text-left text-lg">{t(f.q)}</AccordionTrigger>
-              <AccordionContent className="text-base text-muted-foreground">{t(f.a)}</AccordionContent>
-            </AccordionItem>
+            <details key={i} className="group py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium">
+                {t(f.q)}<span className="text-2xl text-primary transition group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-3 text-base text-muted-foreground">{t(f.a)}</p>
+            </details>
           ))}
-        </Accordion>
+        </div>
       </section>
 
       {/* CONTACTO */}
