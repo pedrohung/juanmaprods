@@ -93,7 +93,7 @@ function Index() {
           <div aria-hidden className="rings-bg absolute -left-16 -top-16 -z-10 h-64 w-64" />
         </div>
         <div className="reveal">
-          <Eyebrow>{t(nav[1].label)}</Eyebrow>
+          <Eyebrow>{t(nav[1]!.label)}</Eyebrow>
           <h2 className="text-5xl uppercase md:text-7xl">{t(about.title)}</h2>
           {about.bio.map((p, i) => <p key={i} className="mt-6 text-lg leading-relaxed text-muted-foreground">{t(p)}</p>)}
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
@@ -119,7 +119,7 @@ function Index() {
         <h2 className="reveal text-5xl uppercase md:text-7xl">{lang === "es" ? "Lo que hago" : "What I do"}</h2>
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => {
-            const Icon = serviceIcons[s.icon];
+            const Icon = serviceIcons[s.icon] ?? Disc3;
             return (
               <article key={s.icon} className="reveal group relative overflow-hidden rounded-lg border border-border bg-card p-8 transition duration-300 hover:-translate-y-1 hover:border-primary">
                 <div aria-hidden className="rings-bg absolute -right-20 -top-20 h-48 w-48 opacity-0 transition duration-500 group-hover:opacity-60" />
@@ -142,7 +142,7 @@ function Index() {
       <section id="proceso" className="bg-ink py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 md:grid-cols-2">
           <div>
-            <Eyebrow>{t(nav[4].label)}</Eyebrow>
+            <Eyebrow>{t(nav[4]!.label)}</Eyebrow>
             <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.processTitle)}</h2>
             <ol className="mt-12 space-y-8">
               {process.map((p, i) => (
@@ -215,7 +215,7 @@ function Index() {
       {/* CONTACTO */}
       <section id="contacto" className="bg-ink py-28">
         <div className="mx-auto max-w-3xl px-6">
-          <Eyebrow>{t(nav[6].label)}</Eyebrow>
+          <Eyebrow>{t(nav[6]!.label)}</Eyebrow>
           <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.contactTitle)}</h2>
           <ContactForm t={t} />
           <div className="mt-12 text-center">
