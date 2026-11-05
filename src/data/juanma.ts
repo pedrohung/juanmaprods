@@ -121,6 +121,7 @@ export const ui = {
   type: { es: "Tipo de proyecto", en: "Project type" },
   message: { es: "Mensaje", en: "Message" },
   send: { es: "Enviar mensaje", en: "Send message" },
-  thanks: { es: "¡Gracias! He recibido tu mensaje en pantalla. El envío definitivo se activará muy pronto.", en: "Thanks! Your message was received on screen. Final delivery will be enabled soon." },
+  // PENDIENTE: el formulario aún no envía a ningún destino.
+  thanks: { es: "¡Gracias! Tu mensaje está listo. El formulario se está terminando de conectar; muy pronto llegará directamente a Juanma.", en: "Thanks! Your message is ready. The form is still being connected; soon it will go straight to Juanma." },
   rights: { es: "Productor Musical, Barcelona", en: "Music Producer, Barcelona" },
 };
