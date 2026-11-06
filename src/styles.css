@@ -34,7 +34,7 @@
   --animate-spin-slow: spin 40s linear infinite;
   --animate-marquee: marquee 30s linear infinite;
   --animate-kenburns: kenburns 28s ease-in-out infinite alternate;
-  --animate-spin-vinyl: spin 6s linear infinite;
+  --animate-spin-vinyl: spin 9s linear infinite;
 }
 
 :root {
@@ -138,4 +138,41 @@
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .reveal { opacity: 1; transform: none; }
   }
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.15); }
+  50% { transform: scaleY(1); }
+}
+@utility wave-line {
+  flex: 1 1 0;
+  min-width: 1px;
+  max-width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--primary);
+  box-shadow: 0 0 6px oklch(0.6 0.225 29 / 0.8);
+  animation: wave 1.6s ease-in-out infinite;
+}
+@utility vinyl-holed {
+  mask-image: radial-gradient(circle, transparent 0 2.6%, black 2.8%);
+  -webkit-mask-image: radial-gradient(circle, transparent 0 2.6%, black 2.8%);
+}
+@utility vinyl-shine {
+  border-radius: 9999px;
+  background: linear-gradient(135deg, transparent 30%, oklch(1 0 0 / 0.14) 45%, transparent 55%, oklch(1 0 0 / 0.08) 70%, transparent 80%);
+}
+@utility spindle-ring {
+  border-radius: 9999px;
+  border: 3px solid oklch(0.8 0.01 80);
+  box-shadow: 0 0 0 1px oklch(0.4 0.01 80), inset 0 0 0 1px oklch(0.45 0.01 80);
+}
+@utility vinyl-plain {
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle, transparent 0 4%, oklch(0.6 0.225 29) 4% 30%, oklch(0.05 0 0) 30% 32%, transparent 32%),
+    repeating-radial-gradient(circle, oklch(0.07 0 0) 0 3px, oklch(0.16 0.01 30) 3px 4px),
+    oklch(0.06 0 0);
+  box-shadow: inset 0 0 0 2px oklch(0.3 0.01 30), 0 20px 50px -20px oklch(0 0 0 / 0.8);
+  mask-image: radial-gradient(circle, transparent 0 3.5%, black 3.7%);
 }
