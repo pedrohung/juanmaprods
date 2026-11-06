@@ -5,6 +5,12 @@
 // ⚠️ EJEMPLO   = contenido de muestra que hay que sustituir por el real.
 // =====================================================================
 
+import pianoImg from "@/assets/piano.jpeg.asset.json";
+import monitoresImg from "@/assets/estudio-monitores.jpeg.asset.json";
+import retratoImg from "@/assets/estudio-retrato.jpeg.asset.json";
+import mezclasImg from "@/assets/estudio-mezclas.jpeg.asset.json";
+import tecladoImg from "@/assets/estudio-teclado.jpeg.asset.json";
+
 export type Lang = "es" | "en";
 export type T = { es: string; en: string };
 
@@ -59,13 +65,19 @@ export const about = {
 };
 
 // PENDIENTE: lista orientativa, Juanma confirma la final.
-export const services: { icon: string; title: T; text: T }[] = [
-  { icon: "prod", title: { es: "Producción musical", en: "Music production" }, text: { es: "Construyo el tema contigo: arreglos, sonido y dirección artística.", en: "We build the track together: arrangement, sound and artistic direction." } },
-  { icon: "mix", title: { es: "Mezcla", en: "Mixing" }, text: { es: "Equilibrio, espacio y pegada para que cada elemento ocupe su lugar.", en: "Balance, space and punch so every element sits where it belongs." } },
-  { icon: "master", title: { es: "Mastering", en: "Mastering" }, text: { es: "El acabado final para que tu tema suene sólido en cualquier plataforma.", en: "The final polish so your track sounds solid on any platform." } },
-  { icon: "beat", title: { es: "Beats a medida", en: "Custom beats" }, text: { es: "Instrumentales creados desde cero para tu voz y tu estilo.", en: "Instrumentals made from scratch for your voice and style." } },
-  { icon: "rec", title: { es: "Grabación en estudio", en: "Studio recording" }, text: { es: "Sesiones de grabación de voces e instrumentos en Barcelona.", en: "Vocal and instrument recording sessions in Barcelona." } },
-  { icon: "advice", title: { es: "Preproducción y asesoría", en: "Pre-production & advice" }, text: { es: "Ordenamos ideas, maquetas y objetivos antes de entrar al estudio.", en: "We shape ideas, demos and goals before entering the studio." } },
+export const services: { icon: string; title: T; text: T; includes: T[] }[] = [
+  { icon: "prod", title: { es: "Producción musical", en: "Music production" }, text: { es: "Construyo el tema contigo: arreglos, sonido y dirección artística.", en: "We build the track together: arrangement, sound and artistic direction." }, includes: [{ es: "Arreglos e instrumentación", en: "Arrangement & instrumentation" }, { es: "Diseño de sonido", en: "Sound design" }, { es: "Dirección artística", en: "Artistic direction" }] },
+
+  { icon: "mix", title: { es: "Mezcla", en: "Mixing" }, text: { es: "Equilibrio, espacio y pegada para que cada elemento ocupe su lugar.", en: "Balance, space and punch so every element sits where it belongs." }, includes: [{ es: "Edición y limpieza de pistas", en: "Track editing & cleanup" }, { es: "Ecualización y dinámica", en: "EQ & dynamics" }, { es: "Revisiones contigo", en: "Revisions with you" }] },
+
+  { icon: "master", title: { es: "Mastering", en: "Mastering" }, text: { es: "El acabado final para que tu tema suene sólido en cualquier plataforma.", en: "The final polish so your track sounds solid on any platform." }, includes: [{ es: "Volumen competitivo", en: "Competitive loudness" }, { es: "Ajuste para plataformas", en: "Platform-ready" }, { es: "Archivos finales", en: "Final files" }] },
+
+  { icon: "beat", title: { es: "Beats a medida", en: "Custom beats" }, text: { es: "Instrumentales creados desde cero para tu voz y tu estilo.", en: "Instrumentals made from scratch for your voice and style." }, includes: [{ es: "Instrumental desde cero", en: "Built from scratch" }, { es: "Adaptado a tu voz", en: "Tailored to your voice" }, { es: "Pistas separadas", en: "Separate stems" }] },
+
+  { icon: "rec", title: { es: "Grabación en estudio", en: "Studio recording" }, text: { es: "Sesiones de grabación de voces e instrumentos en Barcelona.", en: "Vocal and instrument recording sessions in Barcelona." }, includes: [{ es: "Voces e instrumentos", en: "Vocals & instruments" }, { es: "Dirección de la sesión", en: "Session direction" }, { es: "Estudio en Barcelona", en: "Studio in Barcelona" }] },
+
+  { icon: "advice", title: { es: "Preproducción y asesoría", en: "Pre-production & advice" }, text: { es: "Ordenamos ideas, maquetas y objetivos antes de entrar al estudio.", en: "We shape ideas, demos and goals before entering the studio." }, includes: [{ es: "Revisión de maquetas", en: "Demo review" }, { es: "Plan de proyecto", en: "Project plan" }, { es: "Referencias y objetivos", en: "References & goals" }] },
+
 ];
 
 export const process: { title: T; text: T }[] = [
@@ -76,11 +88,20 @@ export const process: { title: T; text: T }[] = [
 ];
 
 // EJEMPLO: sustituir por los trabajos reales de Juanma.
-// cover: URL de la portada (vacío = vinilo genérico). audio: URL del audio (vacío = sin reproductor).
-export const works: { example: boolean; title: string; artist: string; year: string; role: T; cover: string; audio: string; description: T }[] = [
-  { example: true, title: "Proyecto 01", artist: "Artista por confirmar", year: "—", role: { es: "Producción", en: "Production" }, cover: "", audio: "", description: { es: "Trabajo de ejemplo pendiente de sustituir.", en: "Sample work pending replacement." } },
-  { example: true, title: "Proyecto 02", artist: "Artista por confirmar", year: "—", role: { es: "Mezcla", en: "Mixing" }, cover: "", audio: "", description: { es: "Trabajo de ejemplo pendiente de sustituir.", en: "Sample work pending replacement." } },
-  { example: true, title: "Proyecto 03", artist: "Artista por confirmar", year: "—", role: { es: "Mastering", en: "Mastering" }, cover: "", audio: "", description: { es: "Trabajo de ejemplo pendiente de sustituir.", en: "Sample work pending replacement." } },
+// cover: portada (ahora fotos de estudio PROVISIONALES). audio: URL del audio (vacío = sin reproductor).
+export const works: { example: boolean; title: string; artist: string; year: string; role: T; cover: string; coverAlt: string; audio: string; description: T }[] = [
+  { example: true, title: "Proyecto 01", artist: "Artista por confirmar", year: "—", role: { es: "Producción", en: "Production" }, cover: pianoImg.url, coverAlt: "Manos en el piano (portada provisional)", audio: "", description: { es: "Trabajo de ejemplo pendiente de sustituir.", en: "Sample work pending replacement." } },
+  { example: true, title: "Proyecto 02", artist: "Artista por confirmar", year: "—", role: { es: "Mezcla", en: "Mixing" }, cover: monitoresImg.url, coverAlt: "Frente a los monitores (portada provisional)", audio: "", description: { es: "Trabajo de ejemplo pendiente de sustituir.", en: "Sample work pending replacement." } },
+  { example: true, title: "Proyecto 03", artist: "Artista por confirmar", year: "—", role: { es: "Mastering", en: "Mastering" }, cover: retratoImg.url, coverAlt: "Retrato en el estudio (portada provisional)", audio: "", description: { es: "Trabajo de ejemplo pendiente de sustituir.", en: "Sample work pending replacement." } },
+];
+
+// Galería «El estudio»
+export const gallery: { src: string; caption: T }[] = [
+  { src: mezclasImg.url, caption: { es: "La mesa de mezclas", en: "The mixing desk" } },
+  { src: pianoImg.url, caption: { es: "El piano", en: "The piano" } },
+  { src: tecladoImg.url, caption: { es: "La sala de control", en: "The control room" } },
+  { src: monitoresImg.url, caption: { es: "Frente a los monitores", en: "Facing the monitors" } },
+  { src: retratoImg.url, caption: { es: "Entre tomas", en: "Between takes" } },
 ];
 
 // Vacío a propósito: no se inventan testimonios.
@@ -123,5 +144,14 @@ export const ui = {
   send: { es: "Enviar mensaje", en: "Send message" },
   // PENDIENTE: el formulario aún no envía a ningún destino.
   thanks: { es: "¡Gracias! Tu mensaje está listo. El formulario se está terminando de conectar; muy pronto llegará directamente a Juanma.", en: "Thanks! Your message is ready. The form is still being connected; soon it will go straight to Juanma." },
+  whatWeDo: { es: "Lo que hago", en: "What I do" },
+  includes: { es: "Incluye", en: "Includes" },
+  onTurntable: { es: "En el plato", en: "On the turntable" },
+  audioSoon: { es: "Audio próximamente", en: "Audio coming soon" },
+  sample: { es: "Trabajo de ejemplo pendiente de sustituir", en: "Sample work pending replacement" },
+  studioEyebrow: { es: "El estudio", en: "The studio" },
+  studioTitle: { es: "Donde nace el sonido", en: "Where the sound is born" },
+  whatsapp: { es: "WhatsApp", en: "WhatsApp" },
+  down: { es: "Bajar", en: "Scroll down" },
   rights: { es: "Productor Musical, Barcelona", en: "Music Producer, Barcelona" },
 };
