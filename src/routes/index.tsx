@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import {
   Ear, ScanSearch, MessageCircle, Disc3, SlidersHorizontal, Gauge, Drum, Mic, Lightbulb,
-  ArrowDown, ArrowRight, Menu, X, Instagram, Youtube, Music2, CheckCircle2, Quote,
+  ArrowDown, ArrowRight, Check, Mail, Clock, Menu, X, Instagram, Youtube, Music2, CheckCircle2, Quote,
 } from "lucide-react";
 import logo from "@/assets/logo-jr.png.asset.json";
 import heroImg from "@/assets/estudio-mezclas.jpeg.asset.json";
@@ -11,7 +11,7 @@ import monitores from "@/assets/estudio-monitores.jpeg.asset.json";
 import teclado from "@/assets/estudio-teclado.jpeg.asset.json";
 import piano from "@/assets/piano.jpeg.asset.json";
 import {
-  site, socials, nav, marquee, about, services, process, works, testimonials, faq, projectTypes, ui,
+  site, socials, gallery, nav, marquee, about, services, process, works, testimonials, faq, projectTypes, ui,
   type Lang, type T,
 } from "@/data/juanma";
 
@@ -58,21 +58,26 @@ function Index() {
 
       {/* HERO */}
       <section id="inicio" className="relative flex min-h-screen items-center overflow-hidden">
-        <img src={heroImg.url} alt="Juanma Rodríguez trabajando en la mesa de mezclas de su estudio" className="absolute inset-0 h-full w-full object-cover" />
+        <img src={heroImg.url} alt="Juanma Rodríguez trabajando en la mesa de mezclas de su estudio" className="animate-kenburns absolute inset-0 h-full w-full object-cover" />
         <div className="hero-overlay absolute inset-0" />
         <div aria-hidden className="vinyl animate-spin-slow absolute -right-40 top-1/2 h-[46rem] w-[46rem] -translate-y-1/2 opacity-50 md:-right-24" />
         <div className="relative mx-auto w-full max-w-7xl px-6 pt-24">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-primary">{t(site.role)}</p>
-          <h1 className="text-[18vw] uppercase leading-[0.85] md:text-[11rem]">
-            Juanma<br />Rodríguez
+          <h1 className="text-[19vw] uppercase leading-[0.82] sm:text-[16vw] lg:text-[13rem]">
+            Juanma<br /><span className="text-primary">Rodríguez</span>
           </h1>
+          <div aria-hidden className="mt-6 flex h-10 items-end gap-1.5">
+            {[0.1, 0.5, 0.3, 0.8, 0.2, 0.6, 0.4, 0.9, 0.15, 0.7, 0.35, 0.55].map((d, i) => (
+              <span key={i} className="eq-bar h-full" style={{ animationDelay: `${-d}s` }} />
+            ))}
+          </div>
           <p className="mt-6 max-w-md text-xl text-muted-foreground md:text-2xl">{t(site.tagline)}</p>
           <div className="mt-10 flex flex-wrap gap-4">
             <a href="#trabajos" className="glow rounded-full bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition hover:scale-105">{t(ui.listen)}</a>
             <a href="#contacto" className="rounded-full border border-foreground/40 px-7 py-3.5 font-semibold transition hover:border-primary hover:text-primary">{t(ui.contact)}</a>
           </div>
         </div>
-        <a href="#sobre-mi" aria-label="Bajar" className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-muted-foreground">
+        <a href="#sobre-mi" aria-label={t(ui.down)} className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce rounded-full border border-foreground/40 p-3 text-foreground">
           <ArrowDown />
         </a>
       </section>
@@ -115,17 +120,20 @@ function Index() {
       {/* SERVICIOS */}
       <section id="servicios" className="mx-auto max-w-7xl px-6 py-28">
         <Eyebrow>{t(ui.servicesTitle)}</Eyebrow>
-        <h2 className="reveal text-5xl uppercase md:text-7xl">{lang === "es" ? "Lo que hago" : "What I do"}</h2>
+        <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.whatWeDo)}</h2>
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s, i) => {
             const Icon = serviceIcons[s.icon] ?? Disc3;
             return (
-              <article key={s.icon} className="reveal group relative overflow-hidden rounded-lg border border-border bg-card p-8 transition duration-300 hover:-translate-y-1 hover:border-primary">
+              <article key={s.icon} className="reveal group relative overflow-hidden rounded-lg border border-border bg-card p-8 transition duration-300 hover:-translate-y-2 hover:border-primary hover:glow">
                 <div aria-hidden className="rings-bg absolute -right-20 -top-20 h-48 w-48 opacity-0 transition duration-500 group-hover:opacity-60" />
                 <span className="font-display text-sm text-muted-foreground">0{i + 1}</span>
                 <Icon className="my-5 h-9 w-9 text-primary" />
                 <h3 className="text-2xl uppercase">{t(s.title)}</h3>
                 <p className="mt-3 text-muted-foreground">{t(s.text)}</p>
+                <ul className="mt-5 space-y-2 text-sm">
+                  {s.includes.map((x, k) => <li key={k} className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" />{t(x)}</li>)}
+                </ul>
                 <a href="#contacto" className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">{t(ui.ask)} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></a>
               </article>
             );
@@ -165,22 +173,47 @@ function Index() {
         <div className="hero-overlay absolute inset-0" />
         <div className="relative mx-auto max-w-7xl px-6">
           <Eyebrow>{t(ui.worksTitle)}</Eyebrow>
-          <h2 className="reveal text-5xl uppercase md:text-7xl">{lang === "es" ? "En el plato" : "On the turntable"}</h2>
-          <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.onTurntable)}</h2>
+          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {works.map((w) => (
-              <article key={w.title} className="reveal group text-center">
-                <div className="relative mx-auto aspect-square w-full max-w-xs">
-                  <div className="vinyl absolute inset-0 transition duration-700 group-hover:rotate-180" />
-                  {w.cover && <img src={w.cover} alt={`Portada de ${w.title}`} className="absolute inset-[30%] rounded-full object-cover" />}
+              <article key={w.title} className="reveal group">
+                <div className="relative aspect-square">
+                  <div aria-hidden className="vinyl animate-spin-vinyl absolute inset-[6%] transition-transform duration-700 group-hover:translate-x-[22%]" />
+                  <div className="relative h-full overflow-hidden rounded-lg border border-border shadow-2xl transition duration-500 group-hover:-translate-x-[6%] group-hover:-rotate-2">
+                    <img src={w.cover} alt={w.coverAlt} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                    {w.example && <span className="absolute left-3 top-3 rounded-full bg-ink/80 px-3 py-1 text-xs font-semibold text-primary">{t(ui.sample)}</span>}
+                  </div>
                 </div>
-                <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-primary">{t(w.role)} · {w.year}</p>
-                <h3 className="mt-2 text-3xl uppercase">{w.title}</h3>
-                <p className="text-muted-foreground">{w.artist}</p>
-                <p className="mt-2 text-sm text-muted-foreground">{t(w.description)}</p>
-                {w.audio && <audio controls src={w.audio} className="mx-auto mt-4 w-full max-w-xs" />}
+                <div className="mt-5 flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">{t(w.role)} · {w.year}</p>
+                    <h3 className="mt-1 text-3xl uppercase">{w.title}</h3>
+                    <p className="text-muted-foreground">{w.artist}</p>
+                  </div>
+                  {!w.audio && <span className="mt-1 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"><Clock className="h-3.5 w-3.5" />{t(ui.audioSoon)}</span>}
+                </div>
+                {w.audio && <audio controls preload="none" src={w.audio} className="mt-4 w-full" />}
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* EL ESTUDIO */}
+      <section className="py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <Eyebrow>{t(ui.studioEyebrow)}</Eyebrow>
+          <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.studioTitle)}</h2>
+        </div>
+        <div className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 md:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
+          {gallery.map((g, i) => (
+            <figure key={i} className="group relative w-[78vw] shrink-0 snap-start overflow-hidden rounded-lg sm:w-[26rem]">
+              <img src={g.src} alt={t(g.caption)} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink to-transparent p-5 font-display text-2xl uppercase">
+                <span className="text-primary">0{i + 1}</span> {t(g.caption)}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
@@ -188,8 +221,9 @@ function Index() {
       <section className="mx-auto max-w-4xl px-6 py-24 text-center">
         <Eyebrow>{t(ui.testimonialsTitle)}</Eyebrow>
         {testimonials.length === 0 ? (
-          <div className="reveal rounded-lg border border-dashed border-border p-12">
-            <Quote className="mx-auto mb-4 h-10 w-10 text-primary" />
+          <div className="reveal relative overflow-hidden rounded-lg border border-border bg-card p-12 md:p-16">
+            <div aria-hidden className="rings-bg absolute -right-24 -top-24 h-72 w-72 opacity-40" />
+            <Quote className="relative mx-auto mb-4 h-12 w-12 text-primary" />
             <p className="text-xl text-muted-foreground">{t(ui.testimonialsEmpty)}</p>
           </div>
         ) : (
@@ -220,7 +254,8 @@ function Index() {
           <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.contactTitle)}</h2>
           <ContactForm t={t} />
           <div className="mt-12 text-center">
-            {activeSocials.length > 0 && <Socials list={activeSocials} />}
+            <ContactRow />
+            {activeSocials.length > 0 && <div className="mt-6"><Socials list={activeSocials} /></div>}
             <p className="mt-4 text-muted-foreground">{t(site.location)}</p>
           </div>
         </div>
@@ -229,7 +264,7 @@ function Index() {
       {/* PIE */}
       <footer className="border-t border-border py-12">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 md:flex-row md:justify-between">
-          <img src={logo.url} alt="Logo JR de Juanma Rodríguez" className="h-14 w-14" />
+          <img src={logo.url} alt="Logo JR de Juanma Rodríguez" className="h-24 w-24" />
           <nav className="flex flex-wrap justify-center gap-5 text-sm text-muted-foreground">
             {nav.map((n) => <a key={n.id} href={`#${n.id}`} className="hover:text-primary">{t(n.label)}</a>)}
           </nav>
@@ -237,6 +272,16 @@ function Index() {
         </div>
         <p className="mt-8 text-center text-sm text-muted-foreground">© 2026 Juanma Rodríguez — {t(ui.rights)}</p>
       </footer>
+    </div>
+  );
+}
+
+function ContactRow() {
+  if (!site.whatsapp && !site.email) return null;
+  return (
+    <div className="flex flex-wrap justify-center gap-3">
+      {site.whatsapp && <a href={`https://wa.me/${site.whatsapp.replace(/\D/g, "")}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition hover:scale-105"><MessageCircle className="h-5 w-5" />WhatsApp</a>}
+      {site.email && <a href={`mailto:${site.email}`} className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-semibold transition hover:border-primary hover:text-primary"><Mail className="h-5 w-5" />{site.email}</a>}
     </div>
   );
 }
