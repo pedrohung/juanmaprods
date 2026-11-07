@@ -303,7 +303,7 @@ function WorksFocus({ t }: { t: (x: T) => string }) {
                 <div
                   aria-hidden
                   className={`vinyl-plain animate-spin-vinyl absolute inset-[4%] transition-transform duration-700 ${
-                    isSel ? "translate-x-[85%]" : "translate-x-[32%] group-hover:translate-x-[58%]"
+                    isSel ? "translate-x-[40%] sm:translate-x-[85%]" : "translate-x-[32%] group-hover:translate-x-[58%]"
                   }`}
                 />
                 <div className="relative h-full w-[92%] overflow-hidden rounded-lg border border-border shadow-2xl transition duration-500">
