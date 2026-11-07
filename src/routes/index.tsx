@@ -200,15 +200,25 @@ function Index() {
           <Eyebrow>{t(ui.studioEyebrow)}</Eyebrow>
           <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.studioTitle)}</h2>
         </div>
-        <div className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 md:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
-          {gallery.map((g, i) => (
-            <figure key={i} className="group relative w-[78vw] shrink-0 snap-start overflow-hidden rounded-lg sm:w-[26rem]">
-              <img src={g.src} alt={t(g.caption)} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink to-transparent p-5 font-display text-2xl uppercase">
-                <span className="text-primary">0{i + 1}</span> {t(g.caption)}
-              </figcaption>
-            </figure>
-          ))}
+        {/* ESTANTERÍA DE VINILOS */}
+        <div className="mx-auto mt-12 max-w-7xl px-6">
+          <div className="flex flex-wrap items-end justify-center gap-x-3 gap-y-0 sm:gap-x-4">
+            {gallery.map((g, i) => (
+              <figure
+                key={i}
+                className="group w-[31%] sm:w-[17%]"
+                style={{ transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)` }}
+              >
+                <div className="relative overflow-hidden rounded-sm border border-border shadow-xl transition duration-300 group-hover:-translate-y-3 group-hover:rotate-0 group-hover:shadow-2xl">
+                  <img src={g.src} alt={t(g.caption)} className="aspect-square w-full object-cover" loading="lazy" />
+                </div>
+                <figcaption className="mt-2 text-center text-xs text-muted-foreground sm:text-sm">
+                  <span className="font-display text-primary">0{i + 1}</span> {t(g.caption)}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div aria-hidden className="relative h-3 rounded-sm bg-gradient-to-b from-[oklch(0.3_0.01_30)] to-[oklch(0.16_0.005_30)] shadow-[0_10px_24px_-8px_oklch(0_0_0/0.9)]" />
         </div>
       </section>
 
