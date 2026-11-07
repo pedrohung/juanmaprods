@@ -291,7 +291,7 @@ function WorksFocus({ t }: { t: (x: T) => string }) {
         return (
           <article
             key={w.title}
-            className={`reveal origin-top transition-all duration-500 ${dimmed ? "scale-[0.58] opacity-40" : "scale-100 opacity-100"}`}
+            className={`reveal origin-top transition-all duration-500 ${dimmed ? "scale-[0.58] opacity-40" : "relative z-10 scale-100 opacity-100"}`}
           >
             <button
               type="button"
