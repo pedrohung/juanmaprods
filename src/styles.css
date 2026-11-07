@@ -176,3 +176,8 @@
   box-shadow: inset 0 0 0 2px oklch(0.3 0.01 30), 0 20px 50px -20px oklch(0 0 0 / 0.8);
   mask-image: radial-gradient(circle, transparent 0 3.5%, black 3.7%);
 }
+
+@utility shelf-plank {
+  background: linear-gradient(to bottom, var(--input), var(--card));
+  box-shadow: 0 10px 24px -8px oklch(0 0 0 / 0.9);
+}

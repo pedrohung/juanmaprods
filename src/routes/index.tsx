@@ -60,15 +60,30 @@ function Index() {
       <section id="inicio" className="relative flex min-h-screen items-center overflow-hidden">
         <img src={heroImg.url} alt="Juanma Rodríguez trabajando en la mesa de mezclas de su estudio" className="animate-kenburns absolute inset-0 h-full w-full object-cover" />
         <div className="hero-overlay absolute inset-0" />
-        <div aria-hidden className="vinyl animate-spin-slow absolute -right-40 top-1/2 h-[46rem] w-[46rem] -translate-y-1/2 opacity-50 md:-right-24" />
+        {/* VINILO DEL HERO */}
+        <div aria-hidden className="absolute right-0 top-1/2 hidden -translate-y-1/2 opacity-80 sm:block md:right-6 lg:right-12">
+          <div className="vinyl vinyl-holed animate-spin-vinyl relative h-[18rem] w-[18rem] lg:h-[24rem] lg:w-[24rem]">
+            <img src={retrato.url} alt="" className="absolute inset-[24%] rounded-full object-cover" />
+            <div className="vinyl-shine absolute inset-0" />
+          </div>
+          <div className="spindle-ring absolute left-1/2 top-1/2 h-[6.5%] w-[6.5%] -translate-x-1/2 -translate-y-1/2" />
+        </div>
         <div className="relative mx-auto w-full max-w-7xl px-6 pt-24">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-primary">{t(site.role)}</p>
           <h1 className="text-[19vw] uppercase leading-[0.82] sm:text-[16vw] lg:text-[13rem]">
             Juanma<br /><span className="text-primary">Rodríguez</span>
           </h1>
-          <div aria-hidden className="mt-6 flex h-10 items-end gap-1.5">
-            {[0.1, 0.5, 0.3, 0.8, 0.2, 0.6, 0.4, 0.9, 0.15, 0.7, 0.35, 0.55].map((d, i) => (
-              <span key={i} className="eq-bar h-full" style={{ animationDelay: `${-d}s` }} />
+          <div aria-hidden className="mt-6 flex h-8 items-center gap-[2px]">
+            {Array.from({ length: 90 }).map((_, i) => (
+              <span
+                key={i}
+                className="wave-line"
+                style={{
+                  animationDelay: `${-i * 0.045}s`,
+                  animationDuration: `${1.2 + Math.sin(i * 0.35) * 0.5}s`,
+                  height: `${20 + Math.abs(Math.sin(i * 0.22)) * 80}%`,
+                }}
+              />
             ))}
           </div>
           <p className="mt-6 max-w-md text-xl text-muted-foreground md:text-2xl">{t(site.tagline)}</p>
@@ -174,28 +189,8 @@ function Index() {
         <div className="relative mx-auto max-w-7xl px-6">
           <Eyebrow>{t(ui.worksTitle)}</Eyebrow>
           <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.onTurntable)}</h2>
-          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {works.map((w) => (
-              <article key={w.title} className="reveal group">
-                <div className="relative aspect-square">
-                  <div aria-hidden className="vinyl animate-spin-vinyl absolute inset-[6%] transition-transform duration-700 group-hover:translate-x-[22%]" />
-                  <div className="relative h-full overflow-hidden rounded-lg border border-border shadow-2xl transition duration-500 group-hover:-translate-x-[6%] group-hover:-rotate-2">
-                    <img src={w.cover} alt={w.coverAlt} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
-                    {w.example && <span className="absolute left-3 top-3 rounded-full bg-ink/80 px-3 py-1 text-xs font-semibold text-primary">{t(ui.sample)}</span>}
-                  </div>
-                </div>
-                <div className="mt-5 flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">{t(w.role)} · {w.year}</p>
-                    <h3 className="mt-1 text-3xl uppercase">{w.title}</h3>
-                    <p className="text-muted-foreground">{w.artist}</p>
-                  </div>
-                  {!w.audio && <span className="mt-1 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"><Clock className="h-3.5 w-3.5" />{t(ui.audioSoon)}</span>}
-                </div>
-                {w.audio && <audio controls preload="none" src={w.audio} className="mt-4 w-full" />}
-              </article>
-            ))}
-          </div>
+          <WorksFocus t={t} />
+
         </div>
       </section>
 
@@ -205,15 +200,25 @@ function Index() {
           <Eyebrow>{t(ui.studioEyebrow)}</Eyebrow>
           <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.studioTitle)}</h2>
         </div>
-        <div className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-4 md:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
-          {gallery.map((g, i) => (
-            <figure key={i} className="group relative w-[78vw] shrink-0 snap-start overflow-hidden rounded-lg sm:w-[26rem]">
-              <img src={g.src} alt={t(g.caption)} className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink to-transparent p-5 font-display text-2xl uppercase">
-                <span className="text-primary">0{i + 1}</span> {t(g.caption)}
-              </figcaption>
-            </figure>
-          ))}
+        {/* ESTANTERÍA DE VINILOS */}
+        <div className="mx-auto mt-12 max-w-7xl px-6">
+          <div className="flex flex-wrap items-end justify-center gap-x-3 gap-y-0 sm:gap-x-4">
+            {gallery.map((g, i) => (
+              <figure
+                key={i}
+                className="group w-[31%] sm:w-[17%]"
+                style={{ transform: `rotate(${i % 2 === 0 ? -1.5 : 1.5}deg)` }}
+              >
+                <div className="relative overflow-hidden rounded-sm border border-border shadow-xl transition duration-300 group-hover:-translate-y-3 group-hover:rotate-0 group-hover:shadow-2xl">
+                  <img src={g.src} alt={t(g.caption)} className="aspect-square w-full object-cover" loading="lazy" />
+                </div>
+                <figcaption className="mt-2 text-center text-xs text-muted-foreground sm:text-sm">
+                  <span className="font-display text-primary">0{i + 1}</span> {t(g.caption)}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+          <div aria-hidden className="shelf-plank relative h-3 rounded-sm" />
         </div>
       </section>
 
@@ -272,6 +277,53 @@ function Index() {
         </div>
         <p className="mt-8 text-center text-sm text-muted-foreground">© 2026 Juanma Rodríguez — {t(ui.rights)}</p>
       </footer>
+    </div>
+  );
+}
+
+function WorksFocus({ t }: { t: (x: T) => string }) {
+  const [selected, setSelected] = useState<number | null>(null);
+  return (
+    <div className="mt-14 grid items-start gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {works.map((w, i) => {
+        const isSel = selected === i;
+        const dimmed = selected !== null && !isSel;
+        return (
+          <article
+            key={w.title}
+            className={`reveal origin-top transition-all duration-500 ${dimmed ? "scale-[0.58] opacity-40" : "relative z-10 scale-100 opacity-100"}`}
+          >
+            <button
+              type="button"
+              aria-pressed={isSel}
+              onClick={() => setSelected(isSel ? null : i)}
+              className="group block w-full cursor-pointer text-left"
+            >
+              <div className="relative aspect-square">
+                <div
+                  aria-hidden
+                  className={`vinyl-plain animate-spin-vinyl absolute inset-[4%] transition-transform duration-700 ${
+                    isSel ? "translate-x-[40%] sm:translate-x-[85%]" : "translate-x-[32%] group-hover:translate-x-[58%]"
+                  }`}
+                />
+                <div className="relative h-full w-[92%] overflow-hidden rounded-lg border border-border shadow-2xl transition duration-500">
+                  <img src={w.cover} alt={w.coverAlt} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                  {w.example && <span className="absolute left-3 top-3 rounded-full bg-ink/80 px-3 py-1 text-xs font-semibold text-primary">{t(ui.sample)}</span>}
+                </div>
+              </div>
+            </button>
+            <div className="mt-5 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">{t(w.role)} · {w.year}</p>
+                <h3 className="mt-1 text-3xl uppercase">{w.title}</h3>
+                <p className="text-muted-foreground">{w.artist}</p>
+              </div>
+              {!w.audio && <span className="mt-1 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"><Clock className="h-3.5 w-3.5" />{t(ui.audioSoon)}</span>}
+            </div>
+            {w.audio && <audio controls preload="none" src={w.audio} className="mt-4 w-full" />}
+          </article>
+        );
+      })}
     </div>
   );
 }
