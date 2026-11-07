@@ -218,7 +218,7 @@ function Index() {
               </figure>
             ))}
           </div>
-          <div aria-hidden className="relative h-3 rounded-sm bg-gradient-to-b from-[oklch(0.3_0.01_30)] to-[oklch(0.16_0.005_30)] shadow-[0_10px_24px_-8px_oklch(0_0_0/0.9)]" />
+          <div aria-hidden className="shelf-plank relative h-3 rounded-sm" />
         </div>
       </section>
 
