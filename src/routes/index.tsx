@@ -60,15 +60,30 @@ function Index() {
       <section id="inicio" className="relative flex min-h-screen items-center overflow-hidden">
         <img src={heroImg.url} alt="Juanma Rodríguez trabajando en la mesa de mezclas de su estudio" className="animate-kenburns absolute inset-0 h-full w-full object-cover" />
         <div className="hero-overlay absolute inset-0" />
-        <div aria-hidden className="vinyl animate-spin-slow absolute -right-40 top-1/2 h-[46rem] w-[46rem] -translate-y-1/2 opacity-50 md:-right-24" />
+        {/* VINILO DEL HERO */}
+        <div aria-hidden className="absolute right-0 top-1/2 hidden -translate-y-1/2 opacity-80 sm:block md:right-6 lg:right-12">
+          <div className="vinyl vinyl-holed animate-spin-vinyl relative h-[18rem] w-[18rem] lg:h-[24rem] lg:w-[24rem]">
+            <img src={retrato.url} alt="" className="absolute inset-[24%] rounded-full object-cover" />
+            <div className="vinyl-shine absolute inset-0" />
+          </div>
+          <div className="spindle-ring absolute left-1/2 top-1/2 h-[6.5%] w-[6.5%] -translate-x-1/2 -translate-y-1/2" />
+        </div>
         <div className="relative mx-auto w-full max-w-7xl px-6 pt-24">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-primary">{t(site.role)}</p>
           <h1 className="text-[19vw] uppercase leading-[0.82] sm:text-[16vw] lg:text-[13rem]">
             Juanma<br /><span className="text-primary">Rodríguez</span>
           </h1>
-          <div aria-hidden className="mt-6 flex h-10 items-end gap-1.5">
-            {[0.1, 0.5, 0.3, 0.8, 0.2, 0.6, 0.4, 0.9, 0.15, 0.7, 0.35, 0.55].map((d, i) => (
-              <span key={i} className="eq-bar h-full" style={{ animationDelay: `${-d}s` }} />
+          <div aria-hidden className="mt-6 flex h-8 items-center gap-[2px]">
+            {Array.from({ length: 90 }).map((_, i) => (
+              <span
+                key={i}
+                className="wave-line"
+                style={{
+                  animationDelay: `${-i * 0.045}s`,
+                  animationDuration: `${1.2 + Math.sin(i * 0.35) * 0.5}s`,
+                  height: `${20 + Math.abs(Math.sin(i * 0.22)) * 80}%`,
+                }}
+              />
             ))}
           </div>
           <p className="mt-6 max-w-md text-xl text-muted-foreground md:text-2xl">{t(site.tagline)}</p>
