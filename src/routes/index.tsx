@@ -281,6 +281,53 @@ function Index() {
   );
 }
 
+function WorksFocus({ t }: { t: (x: T) => string }) {
+  const [selected, setSelected] = useState<number | null>(null);
+  return (
+    <div className="mt-14 grid items-start gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {works.map((w, i) => {
+        const isSel = selected === i;
+        const dimmed = selected !== null && !isSel;
+        return (
+          <article
+            key={w.title}
+            className={`reveal origin-top transition-all duration-500 ${dimmed ? "scale-[0.58] opacity-40" : "scale-100 opacity-100"}`}
+          >
+            <button
+              type="button"
+              aria-pressed={isSel}
+              onClick={() => setSelected(isSel ? null : i)}
+              className="group block w-full cursor-pointer text-left"
+            >
+              <div className="relative aspect-square">
+                <div
+                  aria-hidden
+                  className={`vinyl-plain animate-spin-vinyl absolute inset-[4%] transition-transform duration-700 ${
+                    isSel ? "translate-x-[85%]" : "translate-x-[32%] group-hover:translate-x-[58%]"
+                  }`}
+                />
+                <div className="relative h-full w-[92%] overflow-hidden rounded-lg border border-border shadow-2xl transition duration-500">
+                  <img src={w.cover} alt={w.coverAlt} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                  {w.example && <span className="absolute left-3 top-3 rounded-full bg-ink/80 px-3 py-1 text-xs font-semibold text-primary">{t(ui.sample)}</span>}
+                </div>
+              </div>
+            </button>
+            <div className="mt-5 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">{t(w.role)} · {w.year}</p>
+                <h3 className="mt-1 text-3xl uppercase">{w.title}</h3>
+                <p className="text-muted-foreground">{w.artist}</p>
+              </div>
+              {!w.audio && <span className="mt-1 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"><Clock className="h-3.5 w-3.5" />{t(ui.audioSoon)}</span>}
+            </div>
+            {w.audio && <audio controls preload="none" src={w.audio} className="mt-4 w-full" />}
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
 function ContactRow() {
   if (!site.whatsapp && !site.email) return null;
   return (
