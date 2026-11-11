@@ -108,6 +108,7 @@ function Index() {
             ))}
           </div>
           <p className="mt-6 max-w-md text-xl text-muted-foreground md:text-2xl">{t(site.tagline)}</p>
+          <p className="mt-2 text-sm text-muted-foreground">Sant Joan Despí · Barcelona</p>
           {site.reelAudio && (
             <div id="reel" className="mt-8 max-w-md rounded-lg border border-primary/60 bg-ink/80 p-4">
               <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary">{t(ui.reel)}</p>
