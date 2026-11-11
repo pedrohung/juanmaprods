@@ -116,7 +116,7 @@ function Index() {
           )}
           <div className="mt-10 flex flex-wrap gap-4">
             <BookButton t={t} />
-            <a href={site.reelAudio ? "#reel" : "#trabajos"} className=" rounded-full bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition hover:scale-105">{t(ui.listen)}</a>
+            <a href={site.reelAudio ? "#reel" : "#trabajos"} className="rounded-full border border-foreground/40 px-7 py-3.5 font-semibold transition hover:border-primary hover:text-primary">{t(ui.listen)}</a>
             <a href="#contacto" className="rounded-full border border-foreground/40 px-7 py-3.5 font-semibold transition hover:border-primary hover:text-primary">{t(ui.contact)}</a>
           </div>
         </div>
