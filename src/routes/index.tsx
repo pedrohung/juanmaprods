@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import {
-  Ear, ScanSearch, MessageCircle, Disc3, SlidersHorizontal, Gauge, Drum, Mic, Lightbulb,
+  CalendarCheck, Star, Ear, ScanSearch, MessageCircle, Disc3, SlidersHorizontal, Gauge, Drum, Mic, Lightbulb,
   ArrowDown, ArrowRight, Check, Mail, Clock, Menu, X, Instagram, Youtube, Music2, CheckCircle2, Quote,
 } from "lucide-react";
 import logo from "@/assets/logo-jr.png.asset.json";
@@ -24,7 +24,28 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Producción, mezcla, mastering y beats a medida. Barcelona · presencial y a distancia." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "https://juanma.pedrosh.es/" },
+      { property: "og:image", content: "https://juanma.pedrosh.es/og-image.jpg" },
+      { name: "twitter:image", content: "https://juanma.pedrosh.es/og-image.jpg" },
     ],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        name: "Juanma Rodríguez",
+        description: "Productor musical: producción, mezcla, mastering, beats a medida y grabación en estudio.",
+        url: "https://juanma.pedrosh.es/",
+        image: "https://juanma.pedrosh.es/og-image.jpg",
+        areaServed: { "@type": "City", name: "Barcelona" },
+        sameAs: [site.booksy, ...socials.filter((x) => x.url).map((x) => x.url)],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Servicios",
+          itemListElement: ["Producción musical", "Mezcla", "Mastering", "Beats a medida", "Grabación en estudio"].map((n) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: n } })),
+        },
+      }),
+    }],
   }),
   component: Index,
 });
@@ -70,7 +91,7 @@ function Index() {
         </div>
         <div className="relative mx-auto w-full max-w-7xl px-6 pt-24">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-primary">{t(site.role)}</p>
-          <h1 className="text-[19vw] uppercase leading-[0.82] sm:text-[16vw] lg:text-[13rem]">
+          <h1 className="text-[clamp(3rem,15vw,6rem)] uppercase leading-[0.82] sm:text-[16vw] lg:text-[13rem]">
             Juanma<br /><span className="text-primary">Rodríguez</span>
           </h1>
           <div aria-hidden className="mt-6 flex h-8 items-center gap-[2px]">
@@ -87,8 +108,15 @@ function Index() {
             ))}
           </div>
           <p className="mt-6 max-w-md text-xl text-muted-foreground md:text-2xl">{t(site.tagline)}</p>
+          {site.reelAudio && (
+            <div id="reel" className="mt-8 max-w-md rounded-lg border border-primary/60 bg-ink/80 p-4">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary">{t(ui.reel)}</p>
+              <audio controls preload="none" src={site.reelAudio} className="w-full accent-primary" />
+            </div>
+          )}
           <div className="mt-10 flex flex-wrap gap-4">
-            <a href="#trabajos" className="glow rounded-full bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition hover:scale-105">{t(ui.listen)}</a>
+            <BookButton t={t} />
+            <a href={site.reelAudio ? "#reel" : "#trabajos"} className=" rounded-full bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition hover:scale-105">{t(ui.listen)}</a>
             <a href="#contacto" className="rounded-full border border-foreground/40 px-7 py-3.5 font-semibold transition hover:border-primary hover:text-primary">{t(ui.contact)}</a>
           </div>
         </div>
@@ -149,6 +177,7 @@ function Index() {
                 <ul className="mt-5 space-y-2 text-sm">
                   {s.includes.map((x, k) => <li key={k} className="flex items-center gap-2"><Check className="h-4 w-4 text-primary" />{t(x)}</li>)}
                 </ul>
+                {s.price && <p className="mt-5 text-sm text-muted-foreground">{t(ui.from)} <span className="font-semibold text-foreground">{s.price} €</span></p>}
                 <a href="#contacto" className="mt-6 inline-flex items-center gap-2 font-semibold text-primary">{t(ui.ask)} <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></a>
               </article>
             );
@@ -223,8 +252,12 @@ function Index() {
       </section>
 
       {/* TESTIMONIOS */}
-      <section className="mx-auto max-w-4xl px-6 py-24 text-center">
+      <section className="mx-auto max-w-6xl px-6 py-24 text-center">
         <Eyebrow>{t(ui.testimonialsTitle)}</Eyebrow>
+        <a href={site.booksy} target="_blank" rel="noreferrer" className="reveal mb-10 inline-flex flex-wrap items-center justify-center gap-2 text-lg hover:text-primary">
+          <span className="flex text-primary">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-5 w-5 fill-current" />)}</span>
+          <span className="font-semibold">{site.rating.value} / 5</span> — {site.rating.count} {t(ui.rating)}
+        </a>
         {testimonials.length === 0 ? (
           <div className="reveal relative overflow-hidden rounded-lg border border-border bg-card p-12 md:p-16">
             <div aria-hidden className="rings-bg absolute -right-24 -top-24 h-72 w-72 opacity-40" />
@@ -232,7 +265,15 @@ function Index() {
             <p className="text-xl text-muted-foreground">{t(ui.testimonialsEmpty)}</p>
           </div>
         ) : (
-          testimonials.map((q, i) => <blockquote key={i} className="mb-8 text-2xl">“{t(q.quote)}” <cite className="block text-base text-primary">{q.author}</cite></blockquote>)
+          <div className="grid gap-5 text-left sm:grid-cols-2 lg:grid-cols-3">
+            {testimonials.map((q, i) => (
+              <blockquote key={i} className="reveal rounded-lg border border-border bg-card p-6">
+                <Quote className="mb-3 h-6 w-6 text-primary" />
+                <p className="text-lg break-words">“{q.quote}”</p>
+                <cite className="mt-3 block not-italic font-semibold text-primary">— {q.author}</cite>
+              </blockquote>
+            ))}
+          </div>
         )}
       </section>
 
@@ -257,6 +298,13 @@ function Index() {
         <div className="mx-auto max-w-3xl px-6">
           <Eyebrow>{t(nav[6]!.label)}</Eyebrow>
           <h2 className="reveal text-5xl uppercase md:text-7xl">{t(ui.contactTitle)}</h2>
+          <div id="reservar" className="reveal mt-10 flex flex-col items-start gap-4 rounded-lg border border-primary bg-card p-8 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="font-display text-2xl uppercase">{t(ui.book)}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{site.address}</p>
+            </div>
+            <BookButton t={t} />
+          </div>
           <ContactForm t={t} />
           <div className="mt-12 text-center">
             <ContactRow />
@@ -275,7 +323,8 @@ function Index() {
           </nav>
           {activeSocials.length > 0 && <Socials list={activeSocials} />}
         </div>
-        <p className="mt-8 text-center text-sm text-muted-foreground">© 2026 Juanma Rodríguez — {t(ui.rights)}</p>
+        <p className="mt-8 text-center text-sm text-muted-foreground">{t(site.location)}</p>
+        <p className="mt-2 text-center text-sm text-muted-foreground">© 2026 Juanma Rodríguez — {t(ui.rights)}</p>
       </footer>
     </div>
   );
@@ -385,14 +434,14 @@ function Header({ lang, setLang, t }: { lang: Lang; setLang: (l: Lang) => void; 
               <button key={l} onClick={() => setLang(l)} aria-pressed={lang === l} className={`rounded-full px-2.5 py-1 uppercase ${lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}>{l}</button>
             ))}
           </div>
-          <a href="#contacto" className="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:scale-105 md:block">{t(ui.cta)}</a>
+          <a href={site.booksy} target="_blank" rel="noreferrer" className="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:scale-105 md:block">{t(ui.book)}</a>
           <button className="lg:hidden" aria-label="Menú" onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
         </div>
       </div>
       {open && (
         <nav className="flex flex-col gap-1 px-6 pb-6 lg:hidden">
           {nav.map((n) => <a key={n.id} href={`#${n.id}`} onClick={() => setOpen(false)} className="py-2 font-display text-2xl uppercase">{t(n.label)}</a>)}
-          <a href="#contacto" onClick={() => setOpen(false)} className="mt-3 rounded-full bg-primary px-5 py-3 text-center font-semibold text-primary-foreground">{t(ui.cta)}</a>
+          <a href={site.booksy} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="mt-3 rounded-full bg-primary px-5 py-3 text-center font-semibold text-primary-foreground">{t(ui.book)}</a>
         </nav>
       )}
     </header>
@@ -410,19 +459,42 @@ function ContactForm({ t }: { t: (x: T) => string }) {
       </div>
     );
   }
-  const submit = (e: FormEvent) => { e.preventDefault(); setSent(true); };
+  const submit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!site.email) return;
+    const f = new FormData(e.currentTarget);
+    const type = projectTypes.find((p) => p.value === f.get("type"));
+    const subject = `Proyecto: ${type ? type.label.es : ""} — ${f.get("name")}`;
+    const body = `Nombre: ${f.get("name")}\nEmail: ${f.get("email")}\nTipo de proyecto: ${type ? type.label.es : ""}\n\n${f.get("message")}`;
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  };
   return (
     <form onSubmit={submit} className="mt-10 grid gap-5 sm:grid-cols-2">
-      <label className="grid gap-2 text-sm font-medium">{t(ui.name)}<input required maxLength={100} className={field} /></label>
-      <label className="grid gap-2 text-sm font-medium">{t(ui.email)}<input required type="email" maxLength={255} className={field} /></label>
+      <label className="grid gap-2 text-sm font-medium">{t(ui.name)}<input name="name" required maxLength={100} className={field} /></label>
+      <label className="grid gap-2 text-sm font-medium">{t(ui.email)}<input name="email" required type="email" maxLength={255} className={field} /></label>
       <label className="grid gap-2 text-sm font-medium sm:col-span-2">{t(ui.type)}
-        <select required className={field} defaultValue="">
+        <select name="type" required className={field} defaultValue="">
           <option value="" disabled>—</option>
           {projectTypes.map((p) => <option key={p.value} value={p.value}>{t(p.label)}</option>)}
         </select>
       </label>
-      <label className="grid gap-2 text-sm font-medium sm:col-span-2">{t(ui.message)}<textarea required rows={5} maxLength={2000} className={field} /></label>
-      <button type="submit" className="glow rounded-full bg-primary px-7 py-4 font-semibold text-primary-foreground transition hover:scale-[1.02] sm:col-span-2">{t(ui.send)}</button>
+      <label className="grid gap-2 text-sm font-medium sm:col-span-2">{t(ui.message)}<textarea name="message" required rows={5} maxLength={2000} className={field} /></label>
+      <button type="submit" disabled={!site.email} className="glow rounded-full bg-primary px-7 py-4 font-semibold text-primary-foreground transition hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100 sm:col-span-2">{t(ui.send)}</button>
+      {!site.email && (
+        <div className="flex flex-col items-start gap-3 rounded-lg border border-border bg-card p-5 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-muted-foreground">{t(ui.bookFast)}</p>
+          <BookButton t={t} />
+        </div>
+      )}
     </form>
+  );
+}
+
+function BookButton({ t }: { t: (x: T) => string }) {
+  return (
+    <a href={site.booksy} target="_blank" rel="noreferrer" className="glow inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-7 py-3.5 font-semibold text-primary-foreground transition hover:scale-105">
+      <CalendarCheck className="h-5 w-5" />{t(ui.book)}
+    </a>
   );
 }

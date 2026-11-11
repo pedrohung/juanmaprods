@@ -18,7 +18,12 @@ export const site = {
   name: "Juanma Rodríguez",
   role: { es: "Productor Musical · Barcelona", en: "Music Producer · Barcelona" },
   tagline: { es: "El sonido que tu música merece.", en: "The sound your music deserves." },
-  location: { es: "Barcelona · Trabajo presencial y a distancia", en: "Barcelona · In-studio and remote work" },
+  location: { es: "Sant Joan Despí · Barcelona · Presencial y a distancia", en: "Sant Joan Despí · Barcelona · In-studio and remote" },
+  address: "Carrer d'Antoni Gaudí 8, 08970 Sant Joan Despí",
+  booksy: "https://booksy.com/es-es/108980_juanma-rodriguez-prods_servicios-profesionales_48832_sant-joan-despi",
+  // Audio del showreel (vacío = el reproductor no se muestra)
+  reelAudio: "",
+  rating: { value: "5,0", count: 15 },
   // PENDIENTE: email y WhatsApp de contacto (vacío = no se muestra)
   email: "",
   whatsapp: "",
@@ -26,7 +31,7 @@ export const site = {
 
 // PENDIENTE: redes sociales. Solo se muestran las que tengan URL.
 export const socials: { name: "Instagram" | "YouTube" | "Spotify" | "TikTok"; url: string }[] = [
-  { name: "Instagram", url: "" },
+  { name: "Instagram", url: "https://www.instagram.com/juanmarodriguezprod/" },
   { name: "YouTube", url: "" },
   { name: "Spotify", url: "" },
   { name: "TikTok", url: "" },
@@ -40,6 +45,7 @@ export const nav: { id: string; label: T }[] = [
   { id: "proceso", label: { es: "Proceso", en: "Process" } },
   { id: "faq", label: { es: "FAQ", en: "FAQ" } },
   { id: "contacto", label: { es: "Contacto", en: "Contact" } },
+  { id: "reservar", label: { es: "Reservar", en: "Book" } },
 ];
 
 export const marquee = ["Producción", "Mezcla", "Mastering", "Beats", "Grabación"];
@@ -65,16 +71,16 @@ export const about = {
 };
 
 // PENDIENTE: lista orientativa, Juanma confirma la final.
-export const services: { icon: string; title: T; text: T; includes: T[] }[] = [
-  { icon: "prod", title: { es: "Producción musical", en: "Music production" }, text: { es: "Construyo el tema contigo: arreglos, sonido y dirección artística.", en: "We build the track together: arrangement, sound and artistic direction." }, includes: [{ es: "Arreglos e instrumentación", en: "Arrangement & instrumentation" }, { es: "Diseño de sonido", en: "Sound design" }, { es: "Dirección artística", en: "Artistic direction" }] },
+export const services: { icon: string; title: T; text: T; includes: T[]; price?: string }[] = [
+  { icon: "prod", price: "500", title: { es: "Producción musical", en: "Music production" }, text: { es: "Construyo el tema contigo: arreglos, sonido y dirección artística.", en: "We build the track together: arrangement, sound and artistic direction." }, includes: [{ es: "Arreglos e instrumentación", en: "Arrangement & instrumentation" }, { es: "Diseño de sonido", en: "Sound design" }, { es: "Dirección artística", en: "Artistic direction" }] },
 
-  { icon: "mix", title: { es: "Mezcla", en: "Mixing" }, text: { es: "Equilibrio, espacio y pegada para que cada elemento ocupe su lugar.", en: "Balance, space and punch so every element sits where it belongs." }, includes: [{ es: "Edición y limpieza de pistas", en: "Track editing & cleanup" }, { es: "Ecualización y dinámica", en: "EQ & dynamics" }, { es: "Revisiones contigo", en: "Revisions with you" }] },
+  { icon: "mix", price: "200", title: { es: "Mezcla", en: "Mixing" }, text: { es: "Equilibrio, espacio y pegada para que cada elemento ocupe su lugar.", en: "Balance, space and punch so every element sits where it belongs." }, includes: [{ es: "Edición y limpieza de pistas", en: "Track editing & cleanup" }, { es: "Ecualización y dinámica", en: "EQ & dynamics" }, { es: "Revisiones contigo", en: "Revisions with you" }] },
 
   { icon: "master", title: { es: "Mastering", en: "Mastering" }, text: { es: "El acabado final para que tu tema suene sólido en cualquier plataforma.", en: "The final polish so your track sounds solid on any platform." }, includes: [{ es: "Volumen competitivo", en: "Competitive loudness" }, { es: "Ajuste para plataformas", en: "Platform-ready" }, { es: "Archivos finales", en: "Final files" }] },
 
-  { icon: "beat", title: { es: "Beats a medida", en: "Custom beats" }, text: { es: "Instrumentales creados desde cero para tu voz y tu estilo.", en: "Instrumentals made from scratch for your voice and style." }, includes: [{ es: "Instrumental desde cero", en: "Built from scratch" }, { es: "Adaptado a tu voz", en: "Tailored to your voice" }, { es: "Pistas separadas", en: "Separate stems" }] },
+  { icon: "beat", price: "250", title: { es: "Beats a medida", en: "Custom beats" }, text: { es: "Instrumentales creados desde cero para tu voz y tu estilo.", en: "Instrumentals made from scratch for your voice and style." }, includes: [{ es: "Instrumental desde cero", en: "Built from scratch" }, { es: "Adaptado a tu voz", en: "Tailored to your voice" }, { es: "Pistas separadas", en: "Separate stems" }] },
 
-  { icon: "rec", title: { es: "Grabación en estudio", en: "Studio recording" }, text: { es: "Sesiones de grabación de voces e instrumentos en Barcelona.", en: "Vocal and instrument recording sessions in Barcelona." }, includes: [{ es: "Voces e instrumentos", en: "Vocals & instruments" }, { es: "Dirección de la sesión", en: "Session direction" }, { es: "Estudio en Barcelona", en: "Studio in Barcelona" }] },
+  { icon: "rec", price: "120", title: { es: "Grabación en estudio", en: "Studio recording" }, text: { es: "Sesiones de grabación de voces e instrumentos en Barcelona.", en: "Vocal and instrument recording sessions in Barcelona." }, includes: [{ es: "Voces e instrumentos", en: "Vocals & instruments" }, { es: "Dirección de la sesión", en: "Session direction" }, { es: "Estudio en Barcelona", en: "Studio in Barcelona" }] },
 
   { icon: "advice", title: { es: "Preproducción y asesoría", en: "Pre-production & advice" }, text: { es: "Ordenamos ideas, maquetas y objetivos antes de entrar al estudio.", en: "We shape ideas, demos and goals before entering the studio." }, includes: [{ es: "Revisión de maquetas", en: "Demo review" }, { es: "Plan de proyecto", en: "Project plan" }, { es: "Referencias y objetivos", en: "References & goals" }] },
 
@@ -104,8 +110,14 @@ export const gallery: { src: string; caption: T }[] = [
   { src: retratoImg.url, caption: { es: "Entre tomas", en: "Between takes" } },
 ];
 
-// Vacío a propósito: no se inventan testimonios.
-export const testimonials: { quote: T; author: string }[] = [];
+// Reseñas reales verificadas en Booksy (texto original, sin traducir).
+export const testimonials: { quote: string; author: string }[] = [
+  { quote: "El mejor productor de Barcelona.", author: "Manel" },
+  { quote: "EL ESTUDIO Y EL PRODUCTOR MÁS TOP DE BARCELONA UN PLACER TRABAJAR AHÍ SIEMPRE", author: "C.G" },
+  { quote: "Trabajar con él es una experiencia inolvidable", author: "Hugo" },
+  { quote: "ES EL MEJOR!", author: "Arian" },
+  { quote: "10/10", author: "Alba di" },
+];
 
 export const faq: { q: T; a: T }[] = [
   { q: { es: "¿Cuánto cuesta una producción?", en: "How much does a production cost?" }, a: { es: "Depende del proyecto: número de temas, servicios y plazos. Cuéntame qué tienes en mente y te paso un presupuesto sin compromiso.", en: "It depends on the project: number of tracks, services and timing. Tell me what you have in mind and I'll send a no-obligation quote." } },
@@ -142,8 +154,12 @@ export const ui = {
   type: { es: "Tipo de proyecto", en: "Project type" },
   message: { es: "Mensaje", en: "Message" },
   send: { es: "Enviar mensaje", en: "Send message" },
-  // PENDIENTE: el formulario aún no envía a ningún destino.
-  thanks: { es: "¡Gracias! Tu mensaje está listo. El formulario se está terminando de conectar; muy pronto llegará directamente a Juanma.", en: "Thanks! Your message is ready. The form is still being connected; soon it will go straight to Juanma." },
+  thanks: { es: "¡Gracias! Se ha abierto tu correo con el mensaje listo para enviar a Juanma.", en: "Thanks! Your email app opened with the message ready to send to Juanma." },
+  book: { es: "Reserva tu sesión", en: "Book your session" },
+  bookFast: { es: "De momento, la forma más rápida es reservar tu sesión", en: "For now, the fastest way is to book your session" },
+  from: { es: "Desde", en: "From" },
+  rating: { es: "reseñas verificadas en Booksy", en: "verified reviews on Booksy" },
+  reel: { es: "Escucha mi reel", en: "Listen to my reel" },
   whatWeDo: { es: "Lo que hago", en: "What I do" },
   includes: { es: "Incluye", en: "Includes" },
   onTurntable: { es: "En el plato", en: "On the turntable" },
